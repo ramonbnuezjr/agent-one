@@ -1,57 +1,79 @@
-# AI Agent Team - Company of One
+# Agent One: AI-Powered Operational Strategy System
 
-This project implements a team of AI agents designed to function as a "company of one" for various clients, with a current focus on the City of New York Department of Social Services (DSS).
+Agent One is a sophisticated, multi-agent system designed to provide data-informed strategic guidance and operational support. Initially conceived for the NYC Department of Social Services (DSS), it leverages a suite of specialized AI agents to analyze data, conduct research, and generate actionable insights. The system is managed through a web-based dashboard that allows for real-time monitoring, configuration, and interaction with the agents.
 
-## Agent Team Members
+## Key Features
 
-1. **Strategist**: Data-informed advisor for senior leaders, specializing in identifying leverage points and accelerating decision-making
-2. **Operations Manager**: Manages workflows and coordinates between agents
-3. **Researcher**: Conducts deep research and analysis
-4. **Writer**: Creates clear, compelling content and communications
-5. **Data Analyst**: Processes and analyzes data to inform decisions
+- **Multi-Agent Architecture:** A collection of specialized agents (Strategist, Researcher, etc.) that collaborate to solve complex problems.
+- **Model Context Protocol (MCP):** A domain-based architecture that allows agents to access and share context from various data sources (e.g., Wikipedia, Arxiv) in a structured way.
+- **Interactive Web Dashboard:** A Flask-based user interface for monitoring agent status, viewing details, and interacting directly with agents through a chat interface.
+- **Dynamic Configuration:** Agents and their underlying models can be configured on-the-fly from the dashboard.
+- **Local LLM Integration:** Powered by local language models through Ollama, ensuring data privacy and control.
 
 ## Project Structure
 
 ```
-.
-├── agents/                 # Individual agent implementations
-│   ├── strategist/        # DSS Strategist agent
-│   ├── ops_manager/       # Operations Manager agent
-│   ├── researcher/        # Researcher agent
-│   ├── writer/           # Writer agent
-│   └── data_analyst/     # Data Analyst agent
-├── core/                  # Shared core functionality
-├── config/               # Configuration files
-├── tests/               # Test suite
-└── examples/            # Example usage and scenarios
+agent-one/
+├── agents/              # Contains the core logic for each specialized agent
+│   ├── researcher/
+│   └── strategist/
+├── config/              # Configuration files for the system
+├── core/                # Core components like the base agent and LLM service
+├── mcp/                 # Model Context Protocol implementation
+├── ui/                  # Web dashboard front-end and back-end
+│   ├── templates/
+│   └── app.py
+├── README.md            # This file
+└── requirements.txt     # Python dependencies
 ```
 
 ## Getting Started
 
-1. Install dependencies:
+### Prerequisites
+
+- Python 3.10+
+- [Ollama](https://ollama.com/) installed and running locally.
+- A locally available model, such as `mistral`. You can pull it by running:
+  ```bash
+  ollama pull mistral
+  ```
+
+### Installation & Setup
+
+1.  **Clone the repository:**
+    ```bash
+    git clone <your-repository-url>
+    cd agent-one
+    ```
+
+2.  **Create a virtual environment (recommended):**
+    ```bash
+    python3 -m venv venv
+    source venv/bin/activate
+    ```
+
+3.  **Install the dependencies:**
+    ```bash
+    pip install -r requirements.txt
+    ```
+
+### Running the Application
+
+Once the setup is complete, you can start the Agent One dashboard:
+
 ```bash
-pip install -r requirements.txt
+python ui/app.py
 ```
 
-2. Configure your environment:
-```bash
-cp .env.example .env
-# Edit .env with your configuration
-```
+The application will be accessible at `http://localhost:8080`.
 
-3. Run the example:
-```bash
-python examples/dss_strategist_example.py
-```
+## How to Use the Dashboard
 
-## Current Focus: DSS Strategist
-
-The DSS Strategist agent is currently implemented as an MVP, designed to:
-- Drive KPI-based public impact strategy
-- Detect operational bottlenecks and policy misalignments
-- Map risks and political sensitivities
-- Provide "What Would It Take" analysis for initiatives
-- Ensure mission alignment and filter distractions
+- **Agent Cards:** The main view shows all available agents and their current status.
+- **View Details:** Click "View Details" on any agent card to see its capabilities and current performance metrics.
+- **Agent Interaction:** Once viewing details, a chat interface will appear, allowing you to send prompts directly to that agent.
+- **Configuration:** Click "Configure" to open a modal where you can adjust settings for each agent (Note: Backend integration for configuration is still in progress).
+- **Registered Domains:** See all active data domains that the agents can access via the Model Context Protocol.
 
 ## License
 

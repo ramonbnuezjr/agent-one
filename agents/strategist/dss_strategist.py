@@ -64,6 +64,14 @@ class DSSStrategist(BaseAgent):
                 response = await self.analyze_initiative(request.get("data", {}))
             elif request_type == "risk_assessment":
                 response = await self.assess_risks(request.get("data", {}))
+            elif request_type == "strategy_analysis":
+                # This path handles the direct string-in, string-out for the UI
+                analysis_result = await self.analyze_strategy(request.get("data", ""))
+                return AgentResponse(
+                    success=True,
+                    message="Strategy analysis completed.",
+                    data={"analysis": analysis_result}
+                )
             else:
                 return AgentResponse(
                     success=False,
@@ -84,6 +92,18 @@ class DSSStrategist(BaseAgent):
                 message="Error processing request",
                 errors=[str(e)]
             )
+        
+    async def analyze_strategy(self, prompt: str) -> str:
+        """A simplified strategy analysis method for direct prompts."""
+        try:
+            system_prompt = "As a senior advisor for NYC DSS, analyze the following proposal and provide strategic guidance."
+            response = await self.llm_service.generate_response(
+                prompt=prompt,
+                system_prompt=system_prompt
+            )
+            return response.content
+        except Exception as e:
+            return f"An unexpected error occurred during strategy analysis: {str(e)}"
         
     async def analyze_kpis(self, kpis: Dict[str, float]) -> Dict[str, Any]:
         """Analyze KPI metrics and provide insights.
